@@ -14,7 +14,7 @@ repositories {
 }
 
 def runeLiteVersion = 'latest.release'
-def pluginMainClass = 'com.playerindicatorstruetile.PlayerIndicatorsTrueTilePluginTest'
+def pluginMainClass = 'com.truetileplayerindicators.TrueTilePlayerIndicatorsPluginTest'
 
 dependencies {
 	compileOnly group: 'net.runelite', name:'client', version: runeLiteVersion
@@ -27,7 +27,7 @@ dependencies {
 	testImplementation group: 'net.runelite', name:'jshell', version: runeLiteVersion
 }
 
-group = 'com.playerindicatorstruetile'
+group = 'com.truetileplayerindicators'
 version = '1.0.0'
 
 tasks.withType(JavaCompile).configureEach {

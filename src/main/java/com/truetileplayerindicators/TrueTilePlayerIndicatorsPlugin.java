@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.playerindicatorstruetile;
+package com.truetileplayerindicators;
 
 import javax.inject.Inject;
 import net.runelite.client.plugins.Plugin;
@@ -33,18 +33,18 @@ import net.runelite.client.ui.overlay.OverlayManager;
 
 @PluginDependency(PlayerIndicatorsPlugin.class)
 @PluginDescriptor(
-	name = "Player Indicators True Tile",
+	name = "True Tile Player Indicators",
 	description = "Adds true tile highlights to Player Indicators",
 	tags = {"player indicators", "true tile"},
 	enabledByDefault = true
 )
-public class PlayerIndicatorsTrueTilePlugin extends Plugin
+public class TrueTilePlayerIndicatorsPlugin extends Plugin
 {
 	@Inject
 	private OverlayManager overlayManager;
 
 	@Inject
-	private PlayerIndicatorsTrueTileOverlay overlay;
+	private TrueTilePlayerIndicatorsOverlay overlay;
 
 	@Override
 	protected void startUp()

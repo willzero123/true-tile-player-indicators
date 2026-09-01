@@ -23,7 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.playerindicatorstruetile;
+package com.truetileplayerindicators;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -42,13 +42,13 @@ import net.runelite.client.ui.overlay.OverlayLayer;
 import net.runelite.client.ui.overlay.OverlayPosition;
 import net.runelite.client.ui.overlay.OverlayUtil;
 
-class PlayerIndicatorsTrueTileOverlay extends Overlay
+class TrueTilePlayerIndicatorsOverlay extends Overlay
 {
 	private final Client client;
 	private final PlayerHighlightService playerHighlightService;
 
 	@Inject
-	private PlayerIndicatorsTrueTileOverlay(Client client, PlayerHighlightService playerHighlightService)
+	private TrueTilePlayerIndicatorsOverlay(Client client, PlayerHighlightService playerHighlightService)
 	{
 		this.client = client;
 		this.playerHighlightService = playerHighlightService;
