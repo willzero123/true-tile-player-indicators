@@ -34,7 +34,7 @@ import net.runelite.client.ui.overlay.OverlayManager;
 @PluginDependency(PlayerIndicatorsPlugin.class)
 @PluginDescriptor(
 	name = "True Tile Player Indicators",
-	description = "Adds true tile highlights to Player Indicators",
+	description = "Adds true tile highlights to Player Indicators. Disabled in PvP.",
 	tags = {"player indicators", "true tile"},
 	enabledByDefault = true
 )

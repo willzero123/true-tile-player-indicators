@@ -60,26 +60,27 @@ class TrueTilePlayerIndicatorsOverlay extends Overlay
 	@Override
 	public Dimension render(Graphics2D graphics)
 	{
+		if (isPvpActive())
+		{
+			return null;
+		}
+
 		WorldView topLevelWorldView = client.getTopLevelWorldView();
 		if (topLevelWorldView == null)
 		{
 			return null;
 		}
-
 		Player localPlayer = client.getLocalPlayer();
-		boolean pvpActive = client.getVarbitValue(VarbitID.INSIDE_WILDERNESS) == 1
-			|| client.getVarbitValue(VarbitID.PVP_AREA_CLIENT) == 1;
-
-		renderWorldView(graphics, topLevelWorldView, localPlayer, pvpActive);
+		renderWorldView(graphics, topLevelWorldView, localPlayer);
 		for (WorldView worldView : topLevelWorldView.worldViews())
 		{
-			renderWorldView(graphics, worldView, localPlayer, pvpActive);
+			renderWorldView(graphics, worldView, localPlayer);
 		}
 
 		return null;
 	}
 
-	private void renderWorldView(Graphics2D graphics, WorldView worldView, Player localPlayer, boolean pvpActive)
+	private void renderWorldView(Graphics2D graphics, WorldView worldView, Player localPlayer)
 	{
 		for (Player player : worldView.players())
 		{
@@ -89,7 +90,7 @@ class TrueTilePlayerIndicatorsOverlay extends Overlay
 				continue;
 			}
 
-			Color color = playerHighlightService.getColor(player, localPlayer, pvpActive);
+			Color color = playerHighlightService.getColor(player, localPlayer);
 			if (color == null)
 			{
 				continue;
@@ -107,6 +108,12 @@ class TrueTilePlayerIndicatorsOverlay extends Overlay
 				OverlayUtil.renderPolygon(graphics, polygon, color);
 			}
 		}
+	}
+
+	private boolean isPvpActive()
+	{
+		return client.getVarbitValue(VarbitID.INSIDE_WILDERNESS) == 1
+			|| client.getVarbitValue(VarbitID.PVP_AREA_CLIENT) == 1;
 	}
 
 	static LocalPoint getTrueTileLocation(Player player)

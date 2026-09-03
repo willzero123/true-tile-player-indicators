@@ -45,7 +45,7 @@ class PlayerHighlightService
 		this.partyService = partyService;
 	}
 
-	Color getColor(Player player, Player localPlayer, boolean pvpActive)
+	Color getColor(Player player, Player localPlayer)
 	{
 		if (player.getName() == null)
 		{
@@ -54,24 +54,24 @@ class PlayerHighlightService
 
 		if (player == localPlayer)
 		{
-			return isEnabled(config.highlightOwnPlayer(), pvpActive)
+			return isEnabled(config.highlightOwnPlayer())
 				? config.getOwnPlayerColor()
 				: null;
 		}
 
 		if (partyService.isInParty()
-			&& isEnabled(config.highlightPartyMembers(), pvpActive)
+			&& isEnabled(config.highlightPartyMembers())
 			&& partyService.getMemberByDisplayName(player.getName()) != null)
 		{
 			return config.getPartyMemberColor();
 		}
 
-		if (player.isFriend() && isEnabled(config.highlightFriends(), pvpActive))
+		if (player.isFriend() && isEnabled(config.highlightFriends()))
 		{
 			return config.getFriendColor();
 		}
 
-		if (player.isFriendsChatMember() && isEnabled(config.highlightFriendsChat(), pvpActive))
+		if (player.isFriendsChatMember() && isEnabled(config.highlightFriendsChat()))
 		{
 			return config.getFriendsChatMemberColor();
 		}
@@ -79,19 +79,19 @@ class PlayerHighlightService
 		if (player.getTeam() > 0
 			&& localPlayer != null
 			&& localPlayer.getTeam() == player.getTeam()
-			&& isEnabled(config.highlightTeamMembers(), pvpActive))
+			&& isEnabled(config.highlightTeamMembers()))
 		{
 			return config.getTeamMemberColor();
 		}
 
-		if (player.isClanMember() && isEnabled(config.highlightClanMembers(), pvpActive))
+		if (player.isClanMember() && isEnabled(config.highlightClanMembers()))
 		{
 			return config.getClanMemberColor();
 		}
 
 		if (!player.isFriendsChatMember()
 			&& !player.isClanMember()
-			&& isEnabled(config.highlightOthers(), pvpActive))
+			&& isEnabled(config.highlightOthers()))
 		{
 			return config.getOthersColor();
 		}
@@ -99,9 +99,8 @@ class PlayerHighlightService
 		return null;
 	}
 
-	private static boolean isEnabled(PlayerIndicatorsConfig.HighlightSetting setting, boolean pvpActive)
+	private static boolean isEnabled(PlayerIndicatorsConfig.HighlightSetting setting)
 	{
-		return setting == PlayerIndicatorsConfig.HighlightSetting.ENABLED
-			|| setting == PlayerIndicatorsConfig.HighlightSetting.PVP && pvpActive;
+		return setting == PlayerIndicatorsConfig.HighlightSetting.ENABLED;
 	}
 }
