@@ -60,7 +60,6 @@ class TrueTileSettings
 	synchronized void loadProfile()
 	{
 		profileId = configManager.getProfile().getId();
-		migrateCustomizedFlags();
 	}
 
 	synchronized void onStyleChanged(ConfigChanged event)
@@ -150,28 +149,6 @@ class TrueTileSettings
 	private void setCustomized(PlayerType type, boolean customized)
 	{
 		configManager.setConfiguration(TrueTilePlayerIndicatorsConfig.GROUP, type.getKey() + "Customized", customized);
-	}
-
-	private void migrateCustomizedFlags()
-	{
-		if (Boolean.TRUE.equals(configManager.getConfiguration(
-			TrueTilePlayerIndicatorsConfig.GROUP, "customizedFlagsMigrated", boolean.class)))
-		{
-			return;
-		}
-
-		for (PlayerType type : PlayerType.values())
-		{
-			String oldKey = type.getKey() + "InheritedColor";
-			Color oldInheritedColor = configManager.getConfiguration(
-				TrueTilePlayerIndicatorsConfig.GROUP, oldKey, Color.class);
-			Color color = getConfig(type, "HighlightColor", Color.class, null);
-			boolean customized = getConfig(type, "Customized", Boolean.class, false)
-				|| (color != null && !color.equals(oldInheritedColor));
-			setCustomized(type, customized);
-			configManager.unsetConfiguration(TrueTilePlayerIndicatorsConfig.GROUP, oldKey);
-		}
-		configManager.setConfiguration(TrueTilePlayerIndicatorsConfig.GROUP, "customizedFlagsMigrated", true);
 	}
 
 	private <T> T getConfig(PlayerType type, String suffix, Class<T> valueType, T defaultValue)

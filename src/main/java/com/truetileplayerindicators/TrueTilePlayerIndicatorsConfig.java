@@ -124,7 +124,7 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 	)
 	default Color ownFillColor()
 	{
-		return fillColor();
+		return DEFAULT_FILL;
 	}
 
 	@Range(min = 1, max = MAX_BORDER_WIDTH)
@@ -137,7 +137,7 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 	)
 	default int ownBorderWidth()
 	{
-		return borderWidth();
+		return DEFAULT_BORDER_WIDTH;
 	}
 
 	@ConfigItem(
@@ -202,7 +202,7 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 	)
 	default Color partyFillColor()
 	{
-		return fillColor();
+		return DEFAULT_FILL;
 	}
 
 	@Range(min = 1, max = MAX_BORDER_WIDTH)
@@ -215,7 +215,7 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 	)
 	default int partyBorderWidth()
 	{
-		return borderWidth();
+		return DEFAULT_BORDER_WIDTH;
 	}
 
 	@ConfigItem(
@@ -280,7 +280,7 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 	)
 	default Color friendsFillColor()
 	{
-		return fillColor();
+		return DEFAULT_FILL;
 	}
 
 	@Range(min = 1, max = MAX_BORDER_WIDTH)
@@ -293,7 +293,7 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 	)
 	default int friendsBorderWidth()
 	{
-		return borderWidth();
+		return DEFAULT_BORDER_WIDTH;
 	}
 
 	@ConfigItem(
@@ -358,7 +358,7 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 	)
 	default Color friendsChatFillColor()
 	{
-		return fillColor();
+		return DEFAULT_FILL;
 	}
 
 	@Range(min = 1, max = MAX_BORDER_WIDTH)
@@ -371,7 +371,7 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 	)
 	default int friendsChatBorderWidth()
 	{
-		return borderWidth();
+		return DEFAULT_BORDER_WIDTH;
 	}
 
 	@ConfigItem(
@@ -436,7 +436,7 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 	)
 	default Color teamFillColor()
 	{
-		return fillColor();
+		return DEFAULT_FILL;
 	}
 
 	@Range(min = 1, max = MAX_BORDER_WIDTH)
@@ -449,7 +449,7 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 	)
 	default int teamBorderWidth()
 	{
-		return borderWidth();
+		return DEFAULT_BORDER_WIDTH;
 	}
 
 	@ConfigItem(
@@ -514,7 +514,7 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 	)
 	default Color clanFillColor()
 	{
-		return fillColor();
+		return DEFAULT_FILL;
 	}
 
 	@Range(min = 1, max = MAX_BORDER_WIDTH)
@@ -527,7 +527,7 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 	)
 	default int clanBorderWidth()
 	{
-		return borderWidth();
+		return DEFAULT_BORDER_WIDTH;
 	}
 
 	@ConfigItem(
@@ -592,7 +592,7 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 	)
 	default Color othersFillColor()
 	{
-		return fillColor();
+		return DEFAULT_FILL;
 	}
 
 	@Range(min = 1, max = MAX_BORDER_WIDTH)
@@ -605,7 +605,7 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 	)
 	default int othersBorderWidth()
 	{
-		return borderWidth();
+		return DEFAULT_BORDER_WIDTH;
 	}
 
 	@ConfigItem(
