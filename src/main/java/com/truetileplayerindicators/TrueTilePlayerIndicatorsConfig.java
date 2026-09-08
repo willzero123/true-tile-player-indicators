@@ -41,8 +41,8 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 	int MAX_BORDER_WIDTH = 10;
 
 	@ConfigSection(
-		name = "True Tile Styles",
-		description = "Fill color and border width for all true tiles",
+		name = "Global Styles",
+		description = "Default fill color and border width for all true tiles",
 		position = 0
 	)
 	String styleSection = "style";
@@ -103,6 +103,44 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 	Color ownHighlightColor();
 
 	@ConfigItem(
+		keyName = "ownCustomize",
+		name = "Customize styles",
+		description = "If enabled, uses the fill color and border width below. When off, uses Global Styles",
+		section = ownSection,
+		position = 2
+	)
+	default boolean ownCustomize()
+	{
+		return false;
+	}
+
+	@Alpha
+	@ConfigItem(
+		keyName = "ownFillColor",
+		name = "Fill color",
+		description = "True tile fill color",
+		section = ownSection,
+		position = 3
+	)
+	default Color ownFillColor()
+	{
+		return fillColor();
+	}
+
+	@Range(min = 1, max = MAX_BORDER_WIDTH)
+	@ConfigItem(
+		keyName = "ownBorderWidth",
+		name = "Border width",
+		description = "True tile border width",
+		section = ownSection,
+		position = 4
+	)
+	default int ownBorderWidth()
+	{
+		return borderWidth();
+	}
+
+	@ConfigItem(
 		keyName = "ownCustomized",
 		name = "Own player style customized",
 		description = "Tracks if this style has been edited",
@@ -141,6 +179,44 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 		position = 1
 	)
 	Color partyHighlightColor();
+
+	@ConfigItem(
+		keyName = "partyCustomize",
+		name = "Customize styles",
+		description = "If enabled, uses the fill color and border width below. When off, uses Global Styles",
+		section = partySection,
+		position = 2
+	)
+	default boolean partyCustomize()
+	{
+		return false;
+	}
+
+	@Alpha
+	@ConfigItem(
+		keyName = "partyFillColor",
+		name = "Fill color",
+		description = "True tile fill color",
+		section = partySection,
+		position = 3
+	)
+	default Color partyFillColor()
+	{
+		return fillColor();
+	}
+
+	@Range(min = 1, max = MAX_BORDER_WIDTH)
+	@ConfigItem(
+		keyName = "partyBorderWidth",
+		name = "Border width",
+		description = "True tile border width",
+		section = partySection,
+		position = 4
+	)
+	default int partyBorderWidth()
+	{
+		return borderWidth();
+	}
 
 	@ConfigItem(
 		keyName = "partyCustomized",
@@ -183,6 +259,44 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 	Color friendsHighlightColor();
 
 	@ConfigItem(
+		keyName = "friendsCustomize",
+		name = "Customize styles",
+		description = "If enabled, uses the fill color and border width below. When off, uses Global Styles",
+		section = friendsSection,
+		position = 2
+	)
+	default boolean friendsCustomize()
+	{
+		return false;
+	}
+
+	@Alpha
+	@ConfigItem(
+		keyName = "friendsFillColor",
+		name = "Fill color",
+		description = "True tile fill color",
+		section = friendsSection,
+		position = 3
+	)
+	default Color friendsFillColor()
+	{
+		return fillColor();
+	}
+
+	@Range(min = 1, max = MAX_BORDER_WIDTH)
+	@ConfigItem(
+		keyName = "friendsBorderWidth",
+		name = "Border width",
+		description = "True tile border width",
+		section = friendsSection,
+		position = 4
+	)
+	default int friendsBorderWidth()
+	{
+		return borderWidth();
+	}
+
+	@ConfigItem(
 		keyName = "friendsCustomized",
 		name = "Friends style customized",
 		description = "Tracks if this style has been edited",
@@ -221,6 +335,44 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 		position = 1
 	)
 	Color friendsChatHighlightColor();
+
+	@ConfigItem(
+		keyName = "friendsChatCustomize",
+		name = "Customize styles",
+		description = "If enabled, uses the fill color and border width below. When off, uses Global Styles",
+		section = friendsChatSection,
+		position = 2
+	)
+	default boolean friendsChatCustomize()
+	{
+		return false;
+	}
+
+	@Alpha
+	@ConfigItem(
+		keyName = "friendsChatFillColor",
+		name = "Fill color",
+		description = "True tile fill color",
+		section = friendsChatSection,
+		position = 3
+	)
+	default Color friendsChatFillColor()
+	{
+		return fillColor();
+	}
+
+	@Range(min = 1, max = MAX_BORDER_WIDTH)
+	@ConfigItem(
+		keyName = "friendsChatBorderWidth",
+		name = "Border width",
+		description = "True tile border width",
+		section = friendsChatSection,
+		position = 4
+	)
+	default int friendsChatBorderWidth()
+	{
+		return borderWidth();
+	}
 
 	@ConfigItem(
 		keyName = "friendsChatCustomized",
@@ -263,6 +415,44 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 	Color teamHighlightColor();
 
 	@ConfigItem(
+		keyName = "teamCustomize",
+		name = "Customize styles",
+		description = "If enabled, uses the fill color and border width below. When off, uses Global Styles",
+		section = teamSection,
+		position = 2
+	)
+	default boolean teamCustomize()
+	{
+		return false;
+	}
+
+	@Alpha
+	@ConfigItem(
+		keyName = "teamFillColor",
+		name = "Fill color",
+		description = "True tile fill color",
+		section = teamSection,
+		position = 3
+	)
+	default Color teamFillColor()
+	{
+		return fillColor();
+	}
+
+	@Range(min = 1, max = MAX_BORDER_WIDTH)
+	@ConfigItem(
+		keyName = "teamBorderWidth",
+		name = "Border width",
+		description = "True tile border width",
+		section = teamSection,
+		position = 4
+	)
+	default int teamBorderWidth()
+	{
+		return borderWidth();
+	}
+
+	@ConfigItem(
 		keyName = "teamCustomized",
 		name = "Team style customized",
 		description = "Tracks if this style has been edited",
@@ -303,6 +493,44 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 	Color clanHighlightColor();
 
 	@ConfigItem(
+		keyName = "clanCustomize",
+		name = "Customize styles",
+		description = "If enabled, uses the fill color and border width below. When off, uses Global Styles",
+		section = clanSection,
+		position = 2
+	)
+	default boolean clanCustomize()
+	{
+		return false;
+	}
+
+	@Alpha
+	@ConfigItem(
+		keyName = "clanFillColor",
+		name = "Fill color",
+		description = "True tile fill color",
+		section = clanSection,
+		position = 3
+	)
+	default Color clanFillColor()
+	{
+		return fillColor();
+	}
+
+	@Range(min = 1, max = MAX_BORDER_WIDTH)
+	@ConfigItem(
+		keyName = "clanBorderWidth",
+		name = "Border width",
+		description = "True tile border width",
+		section = clanSection,
+		position = 4
+	)
+	default int clanBorderWidth()
+	{
+		return borderWidth();
+	}
+
+	@ConfigItem(
 		keyName = "clanCustomized",
 		name = "Clan style customized",
 		description = "Tracks if this style has been edited",
@@ -341,6 +569,44 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 		position = 1
 	)
 	Color othersHighlightColor();
+
+	@ConfigItem(
+		keyName = "othersCustomize",
+		name = "Customize styles",
+		description = "If enabled, uses the fill color and border width below. When off, uses Global Styles",
+		section = othersSection,
+		position = 2
+	)
+	default boolean othersCustomize()
+	{
+		return false;
+	}
+
+	@Alpha
+	@ConfigItem(
+		keyName = "othersFillColor",
+		name = "Fill color",
+		description = "True tile fill color",
+		section = othersSection,
+		position = 3
+	)
+	default Color othersFillColor()
+	{
+		return fillColor();
+	}
+
+	@Range(min = 1, max = MAX_BORDER_WIDTH)
+	@ConfigItem(
+		keyName = "othersBorderWidth",
+		name = "Border width",
+		description = "True tile border width",
+		section = othersSection,
+		position = 4
+	)
+	default int othersBorderWidth()
+	{
+		return borderWidth();
+	}
 
 	@ConfigItem(
 		keyName = "othersCustomized",

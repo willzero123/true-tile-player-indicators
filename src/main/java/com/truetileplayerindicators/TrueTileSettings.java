@@ -132,7 +132,10 @@ class TrueTileSettings
 
 		boolean customized = getConfig(type, "Customized", Boolean.class, false);
 		Color color = customized ? getConfig(type, "HighlightColor", Color.class, inheritedColor) : inheritedColor;
-		updated.put(type, new TrueTileStyle(color, config.fillColor(), config.borderWidth()));
+		boolean customize = getConfig(type, "Customize", Boolean.class, false);
+		Color fill = customize ? getConfig(type, "FillColor", Color.class, config.fillColor()) : config.fillColor();
+		int width = customize ? getConfig(type, "BorderWidth", Integer.class, config.borderWidth()) : config.borderWidth();
+		updated.put(type, new TrueTileStyle(color, fill, width));
 	}
 
 	private void synchronizeStyle(PlayerType type, Color inheritedColor)
