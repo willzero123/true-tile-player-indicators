@@ -41,9 +41,42 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 	int MAX_BORDER_WIDTH = 10;
 
 	@ConfigSection(
+		name = "True Tile Styles",
+		description = "Fill color and border width for all true tiles",
+		position = 0
+	)
+	String styleSection = "style";
+
+	@Alpha
+	@ConfigItem(
+		keyName = "fillColor",
+		name = "Fill color",
+		description = "True tile fill color",
+		section = styleSection,
+		position = 0
+	)
+	default Color fillColor()
+	{
+		return DEFAULT_FILL;
+	}
+
+	@Range(min = 1, max = MAX_BORDER_WIDTH)
+	@ConfigItem(
+		keyName = "borderWidth",
+		name = "Border width",
+		description = "True tile border width",
+		section = styleSection,
+		position = 1
+	)
+	default int borderWidth()
+	{
+		return DEFAULT_BORDER_WIDTH;
+	}
+
+	@ConfigSection(
 		name = "Own Player True Tile",
 		description = "Own player true tile visibility and style",
-		position = 0
+		position = 1
 	)
 	String ownSection = "own";
 
@@ -59,53 +92,15 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 		return TrueTileHighlightMode.INHERIT;
 	}
 
-	@ConfigItem(
-		keyName = "ownCustomize",
-		name = "Customize true tile highlights",
-		description = "If enabled, uses the styles below. When off, uses Player Indicators styling",
-		section = ownSection,
-		position = 1
-	)
-	default boolean ownCustomize()
-	{
-		return false;
-	}
-
 	@Alpha
 	@ConfigItem(
 		keyName = "ownHighlightColor",
-		name = "Highlight color",
+		name = "Border color",
 		description = "True tile border color",
 		section = ownSection,
-		position = 2
+		position = 1
 	)
 	Color ownHighlightColor();
-
-	@Alpha
-	@ConfigItem(
-		keyName = "ownFillColor",
-		name = "Fill color",
-		description = "True tile fill color",
-		section = ownSection,
-		position = 3
-	)
-	default Color ownFillColor()
-	{
-		return DEFAULT_FILL;
-	}
-
-	@Range(min = 1, max = MAX_BORDER_WIDTH)
-	@ConfigItem(
-		keyName = "ownBorderWidth",
-		name = "Border width",
-		description = "True tile border width",
-		section = ownSection,
-		position = 4
-	)
-	default int ownBorderWidth()
-	{
-		return DEFAULT_BORDER_WIDTH;
-	}
 
 	@ConfigItem(
 		keyName = "ownCustomized",
@@ -121,7 +116,7 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 	@ConfigSection(
 		name = "Party True Tiles",
 		description = "Party true tile visibility and style",
-		position = 1
+		position = 2
 	)
 	String partySection = "party";
 
@@ -137,53 +132,15 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 		return TrueTileHighlightMode.INHERIT;
 	}
 
-	@ConfigItem(
-		keyName = "partyCustomize",
-		name = "Customize true tile highlights",
-		description = "If enabled, uses the styles below. When off, uses Player Indicators styling",
-		section = partySection,
-		position = 1
-	)
-	default boolean partyCustomize()
-	{
-		return false;
-	}
-
 	@Alpha
 	@ConfigItem(
 		keyName = "partyHighlightColor",
-		name = "Highlight color",
+		name = "Border color",
 		description = "True tile border color",
 		section = partySection,
-		position = 2
+		position = 1
 	)
 	Color partyHighlightColor();
-
-	@Alpha
-	@ConfigItem(
-		keyName = "partyFillColor",
-		name = "Fill color",
-		description = "True tile fill color",
-		section = partySection,
-		position = 3
-	)
-	default Color partyFillColor()
-	{
-		return DEFAULT_FILL;
-	}
-
-	@Range(min = 1, max = MAX_BORDER_WIDTH)
-	@ConfigItem(
-		keyName = "partyBorderWidth",
-		name = "Border width",
-		description = "True tile border width",
-		section = partySection,
-		position = 4
-	)
-	default int partyBorderWidth()
-	{
-		return DEFAULT_BORDER_WIDTH;
-	}
 
 	@ConfigItem(
 		keyName = "partyCustomized",
@@ -199,7 +156,7 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 	@ConfigSection(
 		name = "Friends True Tiles",
 		description = "Friends true tile visibility and style",
-		position = 2
+		position = 3
 	)
 	String friendsSection = "friends";
 
@@ -215,53 +172,15 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 		return TrueTileHighlightMode.INHERIT;
 	}
 
-	@ConfigItem(
-		keyName = "friendsCustomize",
-		name = "Customize true tile highlights",
-		description = "If enabled, uses the styles below. When off, uses Player Indicators styling",
-		section = friendsSection,
-		position = 1
-	)
-	default boolean friendsCustomize()
-	{
-		return false;
-	}
-
 	@Alpha
 	@ConfigItem(
 		keyName = "friendsHighlightColor",
-		name = "Highlight color",
+		name = "Border color",
 		description = "True tile border color",
 		section = friendsSection,
-		position = 2
+		position = 1
 	)
 	Color friendsHighlightColor();
-
-	@Alpha
-	@ConfigItem(
-		keyName = "friendsFillColor",
-		name = "Fill color",
-		description = "True tile fill color",
-		section = friendsSection,
-		position = 3
-	)
-	default Color friendsFillColor()
-	{
-		return DEFAULT_FILL;
-	}
-
-	@Range(min = 1, max = MAX_BORDER_WIDTH)
-	@ConfigItem(
-		keyName = "friendsBorderWidth",
-		name = "Border width",
-		description = "True tile border width",
-		section = friendsSection,
-		position = 4
-	)
-	default int friendsBorderWidth()
-	{
-		return DEFAULT_BORDER_WIDTH;
-	}
 
 	@ConfigItem(
 		keyName = "friendsCustomized",
@@ -277,7 +196,7 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 	@ConfigSection(
 		name = "Friends Chat True Tiles",
 		description = "Friends chat true tile visibility and style",
-		position = 3
+		position = 4
 	)
 	String friendsChatSection = "friendsChat";
 
@@ -293,53 +212,15 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 		return TrueTileHighlightMode.INHERIT;
 	}
 
-	@ConfigItem(
-		keyName = "friendsChatCustomize",
-		name = "Customize true tile highlights",
-		description = "If enabled, uses the styles below. When off, uses Player Indicators styling",
-		section = friendsChatSection,
-		position = 1
-	)
-	default boolean friendsChatCustomize()
-	{
-		return false;
-	}
-
 	@Alpha
 	@ConfigItem(
 		keyName = "friendsChatHighlightColor",
-		name = "Highlight color",
+		name = "Border color",
 		description = "True tile border color",
 		section = friendsChatSection,
-		position = 2
+		position = 1
 	)
 	Color friendsChatHighlightColor();
-
-	@Alpha
-	@ConfigItem(
-		keyName = "friendsChatFillColor",
-		name = "Fill color",
-		description = "True tile fill color",
-		section = friendsChatSection,
-		position = 3
-	)
-	default Color friendsChatFillColor()
-	{
-		return DEFAULT_FILL;
-	}
-
-	@Range(min = 1, max = MAX_BORDER_WIDTH)
-	@ConfigItem(
-		keyName = "friendsChatBorderWidth",
-		name = "Border width",
-		description = "True tile border width",
-		section = friendsChatSection,
-		position = 4
-	)
-	default int friendsChatBorderWidth()
-	{
-		return DEFAULT_BORDER_WIDTH;
-	}
 
 	@ConfigItem(
 		keyName = "friendsChatCustomized",
@@ -355,7 +236,7 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 	@ConfigSection(
 		name = "Team True Tiles",
 		description = "Team true tile visibility and style",
-		position = 4
+		position = 5
 	)
 	String teamSection = "team";
 
@@ -371,53 +252,15 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 		return TrueTileHighlightMode.INHERIT;
 	}
 
-	@ConfigItem(
-		keyName = "teamCustomize",
-		name = "Customize true tile highlights",
-		description = "If enabled, uses the styles below. When off, uses Player Indicators styling",
-		section = teamSection,
-		position = 1
-	)
-	default boolean teamCustomize()
-	{
-		return false;
-	}
-
 	@Alpha
 	@ConfigItem(
 		keyName = "teamHighlightColor",
-		name = "Highlight color",
+		name = "Border color",
 		description = "True tile border color",
 		section = teamSection,
-		position = 2
+		position = 1
 	)
 	Color teamHighlightColor();
-
-	@Alpha
-	@ConfigItem(
-		keyName = "teamFillColor",
-		name = "Fill color",
-		description = "True tile fill color",
-		section = teamSection,
-		position = 3
-	)
-	default Color teamFillColor()
-	{
-		return DEFAULT_FILL;
-	}
-
-	@Range(min = 1, max = MAX_BORDER_WIDTH)
-	@ConfigItem(
-		keyName = "teamBorderWidth",
-		name = "Border width",
-		description = "True tile border width",
-		section = teamSection,
-		position = 4
-	)
-	default int teamBorderWidth()
-	{
-		return DEFAULT_BORDER_WIDTH;
-	}
 
 	@ConfigItem(
 		keyName = "teamCustomized",
@@ -433,7 +276,7 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 	@ConfigSection(
 		name = "Clan True Tiles",
 		description = "Clan true tile visibility and style",
-		position = 5
+		position = 6
 	)
 	String clanSection = "clan";
 
@@ -449,53 +292,15 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 		return TrueTileHighlightMode.INHERIT;
 	}
 
-	@ConfigItem(
-		keyName = "clanCustomize",
-		name = "Customize true tile highlights",
-		description = "If enabled, uses the styles below. When off, uses Player Indicators styling",
-		section = clanSection,
-		position = 1
-	)
-	default boolean clanCustomize()
-	{
-		return false;
-	}
-
 	@Alpha
 	@ConfigItem(
 		keyName = "clanHighlightColor",
-		name = "Highlight color",
+		name = "Border color",
 		description = "True tile border color",
 		section = clanSection,
-		position = 2
+		position = 1
 	)
 	Color clanHighlightColor();
-
-	@Alpha
-	@ConfigItem(
-		keyName = "clanFillColor",
-		name = "Fill color",
-		description = "True tile fill color",
-		section = clanSection,
-		position = 3
-	)
-	default Color clanFillColor()
-	{
-		return DEFAULT_FILL;
-	}
-
-	@Range(min = 1, max = MAX_BORDER_WIDTH)
-	@ConfigItem(
-		keyName = "clanBorderWidth",
-		name = "Border width",
-		description = "True tile border width",
-		section = clanSection,
-		position = 4
-	)
-	default int clanBorderWidth()
-	{
-		return DEFAULT_BORDER_WIDTH;
-	}
 
 	@ConfigItem(
 		keyName = "clanCustomized",
@@ -511,7 +316,7 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 	@ConfigSection(
 		name = "Others True Tiles",
 		description = "Others true tile visibility and style",
-		position = 6
+		position = 7
 	)
 	String othersSection = "others";
 
@@ -527,53 +332,15 @@ public interface TrueTilePlayerIndicatorsConfig extends Config
 		return TrueTileHighlightMode.INHERIT;
 	}
 
-	@ConfigItem(
-		keyName = "othersCustomize",
-		name = "Customize true tile highlights",
-		description = "If enabled, uses the styles below. When off, uses Player Indicators styling",
-		section = othersSection,
-		position = 1
-	)
-	default boolean othersCustomize()
-	{
-		return false;
-	}
-
 	@Alpha
 	@ConfigItem(
 		keyName = "othersHighlightColor",
-		name = "Highlight color",
+		name = "Border color",
 		description = "True tile border color",
 		section = othersSection,
-		position = 2
+		position = 1
 	)
 	Color othersHighlightColor();
-
-	@Alpha
-	@ConfigItem(
-		keyName = "othersFillColor",
-		name = "Fill color",
-		description = "True tile fill color",
-		section = othersSection,
-		position = 3
-	)
-	default Color othersFillColor()
-	{
-		return DEFAULT_FILL;
-	}
-
-	@Range(min = 1, max = MAX_BORDER_WIDTH)
-	@ConfigItem(
-		keyName = "othersBorderWidth",
-		name = "Border width",
-		description = "True tile border width",
-		section = othersSection,
-		position = 4
-	)
-	default int othersBorderWidth()
-	{
-		return DEFAULT_BORDER_WIDTH;
-	}
 
 	@ConfigItem(
 		keyName = "othersCustomized",

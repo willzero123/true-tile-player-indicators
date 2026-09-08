@@ -31,22 +31,23 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import net.runelite.client.config.ConfigManager;
-import net.runelite.client.config.ConfigProfile;
 import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.plugins.playerindicators.PlayerIndicatorsConfig;
 
 @Singleton
 class TrueTileSettings
 {
+	private final TrueTilePlayerIndicatorsConfig config;
 	private final PlayerIndicatorsConfig playerIndicatorsConfig;
 	private final ConfigManager configManager;
 	private volatile Map<PlayerType, TrueTileStyle> styles = Collections.emptyMap();
-	private ConfigProfile profile;
+	private long profileId;
 	private boolean updatingInheritedColor;
 
 	@Inject
 	TrueTileSettings(ConfigManager configManager)
 	{
+		this.config = configManager.getConfig(TrueTilePlayerIndicatorsConfig.class);
 		this.playerIndicatorsConfig = configManager.getConfig(PlayerIndicatorsConfig.class);
 		this.configManager = configManager;
 	}
@@ -58,37 +59,28 @@ class TrueTileSettings
 
 	synchronized void loadProfile()
 	{
-		profile = configManager.getProfile();
+		profileId = configManager.getProfile().getId();
 		migrateCustomizedFlags();
 	}
 
 	synchronized void onStyleChanged(ConfigChanged event)
 	{
-		if (updatingInheritedColor || profile != configManager.getProfile())
+		if (updatingInheritedColor || profileId != configManager.getProfile().getId())
 		{
 			return;
 		}
 
 		for (PlayerType type : PlayerType.values())
 		{
-			boolean highlightColor = event.getKey().equals(type.getKey() + "HighlightColor");
-			if (!highlightColor
-				&& !event.getKey().equals(type.getKey() + "FillColor")
-				&& !event.getKey().equals(type.getKey() + "BorderWidth"))
+			if (!event.getKey().equals(type.getKey() + "HighlightColor"))
 			{
 				continue;
 			}
 
+			setCustomized(type, event.getNewValue() != null);
 			if (event.getNewValue() == null)
 			{
-				if (highlightColor && hasDefaultShape(type))
-				{
-					setCustomized(type, false);
-				}
-			}
-			else if (event.getOldValue() != null || highlightColor || !hasDefaultShape(type))
-			{
-				setCustomized(type, true);
+				refresh();
 			}
 			return;
 		}
@@ -105,7 +97,7 @@ class TrueTileSettings
 
 	synchronized void refresh()
 	{
-		if (profile != configManager.getProfile())
+		if (profileId != configManager.getProfile().getId())
 		{
 			return;
 		}
@@ -138,15 +130,9 @@ class TrueTileSettings
 			return;
 		}
 
-		boolean customize = getConfig(type, "Customize", Boolean.class, false);
-		Color color = customize ? getConfig(type, "HighlightColor", Color.class, inheritedColor) : inheritedColor;
-		Color fill = customize
-			? getConfig(type, "FillColor", Color.class, TrueTilePlayerIndicatorsConfig.DEFAULT_FILL)
-			: TrueTilePlayerIndicatorsConfig.DEFAULT_FILL;
-		int width = customize
-			? getConfig(type, "BorderWidth", Integer.class, TrueTilePlayerIndicatorsConfig.DEFAULT_BORDER_WIDTH)
-			: TrueTilePlayerIndicatorsConfig.DEFAULT_BORDER_WIDTH;
-		updated.put(type, new TrueTileStyle(color, fill, width));
+		boolean customized = getConfig(type, "Customized", Boolean.class, false);
+		Color color = customized ? getConfig(type, "HighlightColor", Color.class, inheritedColor) : inheritedColor;
+		updated.put(type, new TrueTileStyle(color, config.fillColor(), config.borderWidth()));
 	}
 
 	private void synchronizeStyle(PlayerType type, Color inheritedColor)
@@ -156,14 +142,6 @@ class TrueTileSettings
 		{
 			setColor(type.getKey() + "HighlightColor", color, inheritedColor);
 		}
-	}
-
-	private boolean hasDefaultShape(PlayerType type)
-	{
-		Color fill = getConfig(type, "FillColor", Color.class, TrueTilePlayerIndicatorsConfig.DEFAULT_FILL);
-		int width = getConfig(type, "BorderWidth", Integer.class, TrueTilePlayerIndicatorsConfig.DEFAULT_BORDER_WIDTH);
-		return TrueTilePlayerIndicatorsConfig.DEFAULT_FILL.equals(fill)
-			&& width == TrueTilePlayerIndicatorsConfig.DEFAULT_BORDER_WIDTH;
 	}
 
 	private void setCustomized(PlayerType type, boolean customized)
@@ -186,8 +164,7 @@ class TrueTileSettings
 				TrueTilePlayerIndicatorsConfig.GROUP, oldKey, Color.class);
 			Color color = getConfig(type, "HighlightColor", Color.class, null);
 			boolean customized = getConfig(type, "Customized", Boolean.class, false)
-				|| (color != null && !color.equals(oldInheritedColor))
-				|| !hasDefaultShape(type);
+				|| (color != null && !color.equals(oldInheritedColor));
 			setCustomized(type, customized);
 			configManager.unsetConfiguration(TrueTilePlayerIndicatorsConfig.GROUP, oldKey);
 		}
