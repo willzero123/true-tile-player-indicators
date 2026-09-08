@@ -24,14 +24,19 @@
  */
 package com.truetileplayerindicators;
 
+import com.google.inject.Provides;
+import java.util.concurrent.atomic.AtomicBoolean;
 import javax.inject.Inject;
+import net.runelite.client.callback.ClientThread;
+import net.runelite.client.config.ConfigManager;
+import net.runelite.client.eventbus.Subscribe;
+import net.runelite.client.events.ConfigChanged;
+import net.runelite.client.events.ProfileChanged;
 import net.runelite.client.plugins.Plugin;
-import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
-import net.runelite.client.plugins.playerindicators.PlayerIndicatorsPlugin;
+import net.runelite.client.plugins.playerindicators.PlayerIndicatorsConfig;
 import net.runelite.client.ui.overlay.OverlayManager;
 
-@PluginDependency(PlayerIndicatorsPlugin.class)
 @PluginDescriptor(
 	name = "True Tile Player Indicators",
 	description = "Adds true tile highlights to Player Indicators. Disabled in PvP.",
@@ -46,15 +51,90 @@ public class TrueTilePlayerIndicatorsPlugin extends Plugin
 	@Inject
 	private TrueTilePlayerIndicatorsOverlay overlay;
 
+	@Inject
+	private TrueTileSettings settings;
+
+	@Inject
+	private ClientThread clientThread;
+
+	private final AtomicBoolean refreshQueued = new AtomicBoolean();
+	private volatile boolean active;
+
+	@Provides
+	TrueTilePlayerIndicatorsConfig provideConfig(ConfigManager configManager)
+	{
+		return configManager.getConfig(TrueTilePlayerIndicatorsConfig.class);
+	}
+
 	@Override
 	protected void startUp()
 	{
+		settings.loadProfile();
+		active = true;
+		queueRefresh();
 		overlayManager.add(overlay);
 	}
 
 	@Override
 	protected void shutDown()
 	{
+		active = false;
 		overlayManager.remove(overlay);
+	}
+
+	@Override
+	public void resetConfiguration()
+	{
+		clientThread.invokeLater(() ->
+		{
+			settings.resetStyles();
+			if (active)
+			{
+				settings.refresh();
+			}
+		});
+	}
+
+	@Subscribe
+	public void onConfigChanged(ConfigChanged event)
+	{
+		if (event.getProfile() != null)
+		{
+			return;
+		}
+
+		if (TrueTilePlayerIndicatorsConfig.GROUP.equals(event.getGroup()))
+		{
+			settings.onStyleChanged(event);
+			queueRefresh();
+		}
+		else if (PlayerIndicatorsConfig.GROUP.equals(event.getGroup()))
+		{
+			queueRefresh();
+		}
+	}
+
+	@Subscribe(priority = -1)
+	public void onProfileChanged(ProfileChanged event)
+	{
+		settings.loadProfile();
+		queueRefresh();
+	}
+
+	private void queueRefresh()
+	{
+		if (!active || !refreshQueued.compareAndSet(false, true))
+		{
+			return;
+		}
+
+		clientThread.invokeLater(() ->
+		{
+			refreshQueued.set(false);
+			if (active)
+			{
+				settings.refresh();
+			}
+		});
 	}
 }

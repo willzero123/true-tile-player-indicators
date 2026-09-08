@@ -25,82 +25,75 @@
  */
 package com.truetileplayerindicators;
 
-import java.awt.Color;
+import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import net.runelite.api.Player;
 import net.runelite.client.party.PartyService;
-import net.runelite.client.plugins.playerindicators.PlayerIndicatorsConfig;
 
 @Singleton
 class PlayerHighlightService
 {
-	private final PlayerIndicatorsConfig config;
+	private final TrueTileSettings settings;
 	private final PartyService partyService;
 
 	@Inject
-	PlayerHighlightService(PlayerIndicatorsConfig config, PartyService partyService)
+	PlayerHighlightService(TrueTileSettings settings, PartyService partyService)
 	{
-		this.config = config;
+		this.settings = settings;
 		this.partyService = partyService;
 	}
 
-	Color getColor(Player player, Player localPlayer)
+	TrueTileStyle getStyle(Player player, Player localPlayer)
 	{
 		if (player.getName() == null)
 		{
 			return null;
 		}
 
+		Map<PlayerType, TrueTileStyle> styles = settings.getStyles();
 		if (player == localPlayer)
 		{
-			return isEnabled(config.highlightOwnPlayer())
-				? config.getOwnPlayerColor()
-				: null;
+			return styles.get(PlayerType.OWN);
 		}
 
 		if (partyService.isInParty()
-			&& isEnabled(config.highlightPartyMembers())
+			&& styles.containsKey(PlayerType.PARTY)
 			&& partyService.getMemberByDisplayName(player.getName()) != null)
 		{
-			return config.getPartyMemberColor();
+			return styles.get(PlayerType.PARTY);
 		}
 
-		if (player.isFriend() && isEnabled(config.highlightFriends()))
+		if (player.isFriend() && styles.containsKey(PlayerType.FRIENDS))
 		{
-			return config.getFriendColor();
+			return styles.get(PlayerType.FRIENDS);
 		}
 
-		if (player.isFriendsChatMember() && isEnabled(config.highlightFriendsChat()))
+		if (player.isFriendsChatMember() && styles.containsKey(PlayerType.FRIENDS_CHAT))
 		{
-			return config.getFriendsChatMemberColor();
+			return styles.get(PlayerType.FRIENDS_CHAT);
 		}
 
 		if (player.getTeam() > 0
 			&& localPlayer != null
 			&& localPlayer.getTeam() == player.getTeam()
-			&& isEnabled(config.highlightTeamMembers()))
+			&& styles.containsKey(PlayerType.TEAM))
 		{
-			return config.getTeamMemberColor();
+			return styles.get(PlayerType.TEAM);
 		}
 
-		if (player.isClanMember() && isEnabled(config.highlightClanMembers()))
+		if (player.isClanMember() && styles.containsKey(PlayerType.CLAN))
 		{
-			return config.getClanMemberColor();
+			return styles.get(PlayerType.CLAN);
 		}
 
 		if (!player.isFriendsChatMember()
 			&& !player.isClanMember()
-			&& isEnabled(config.highlightOthers()))
+			&& styles.containsKey(PlayerType.OTHERS))
 		{
-			return config.getOthersColor();
+			return styles.get(PlayerType.OTHERS);
 		}
 
 		return null;
-	}
-
-	private static boolean isEnabled(PlayerIndicatorsConfig.HighlightSetting setting)
-	{
-		return setting == PlayerIndicatorsConfig.HighlightSetting.ENABLED;
 	}
 }

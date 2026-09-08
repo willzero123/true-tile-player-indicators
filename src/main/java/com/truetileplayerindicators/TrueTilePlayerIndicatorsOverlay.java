@@ -25,7 +25,6 @@
  */
 package com.truetileplayerindicators;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
@@ -48,7 +47,7 @@ class TrueTilePlayerIndicatorsOverlay extends Overlay
 	private final PlayerHighlightService playerHighlightService;
 
 	@Inject
-	private TrueTilePlayerIndicatorsOverlay(Client client, PlayerHighlightService playerHighlightService)
+	TrueTilePlayerIndicatorsOverlay(Client client, PlayerHighlightService playerHighlightService)
 	{
 		this.client = client;
 		this.playerHighlightService = playerHighlightService;
@@ -90,8 +89,8 @@ class TrueTilePlayerIndicatorsOverlay extends Overlay
 				continue;
 			}
 
-			Color color = playerHighlightService.getColor(player, localPlayer);
-			if (color == null)
+			TrueTileStyle style = playerHighlightService.getStyle(player, localPlayer);
+			if (style == null)
 			{
 				continue;
 			}
@@ -105,7 +104,7 @@ class TrueTilePlayerIndicatorsOverlay extends Overlay
 			Polygon polygon = Perspective.getCanvasTilePoly(client, trueTileLocation);
 			if (polygon != null)
 			{
-				OverlayUtil.renderPolygon(graphics, polygon, color);
+				OverlayUtil.renderPolygon(graphics, polygon, style.getHighlightColor(), style.getFillColor(), style.getStroke());
 			}
 		}
 	}
